@@ -10,6 +10,7 @@ Module.register("MMM-SunsetHue", {
         showQualityPercent: true,
         showMagicHours: true,
         onlyShowUpcoming: false,
+        showDayHeaders: true,
         animationSpeed: 1000, // 1 second fade
         initialLoadDelay: 0
     },
@@ -118,11 +119,14 @@ Module.register("MMM-SunsetHue", {
             const dayWrapper = document.createElement("div");
             dayWrapper.className = "sunsethue-day-section";
 
-            // Add Day Header Label (Today, Tomorrow, Saturday, etc.)
-            const dayHeader = document.createElement("div");
-            dayHeader.className = "sunsethue-day-header small dimmed bold";
-            dayHeader.innerText = this.getDayLabel(dateKey);
-            dayWrapper.appendChild(dayHeader);
+            // Add Day Header Label if configured (always show for multi-day, hide "Today" for single-day)
+            const dayLabel = this.getDayLabel(dateKey);
+            if (this.config.showDayHeaders && (this.config.days > 1 || dayLabel !== "Today")) {
+                const dayHeader = document.createElement("div");
+                dayHeader.className = "sunsethue-day-header small dimmed bold";
+                dayHeader.innerText = dayLabel;
+                dayWrapper.appendChild(dayHeader);
+            }
 
             // Container for event cards to layout side-by-side
             const cardsContainer = document.createElement("div");

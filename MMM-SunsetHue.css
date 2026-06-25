@@ -3,47 +3,58 @@
 .mmm-sunsethue-wrapper {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     color: #efefef;
-    max-width: 320px;
+    max-width: 360px;
+    width: 100%;
     text-align: left;
 }
 
 .sunsethue-container {
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    gap: 12px;
 }
 
 .sunsethue-day-section {
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 6px;
 }
 
 .sunsethue-day-header {
-    font-size: 0.75rem;
+    font-size: 0.72rem;
     text-transform: uppercase;
-    letter-spacing: 0.1em;
-    padding-left: 4px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
-    padding-bottom: 4px;
-    margin-bottom: 4px;
+    letter-spacing: 0.08em;
+    padding-left: 2px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+    padding-bottom: 3px;
+    margin-bottom: 2px;
 }
 
-/* Event Card Design */
+/* Container for side-by-side cards */
+.sunsethue-cards-container {
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+    width: 100%;
+}
+
+/* Event Card Design (Compact) */
 .sunsethue-card {
+    flex: 1;
+    min-width: 0; /* Prevents flex children from overflowing */
     background: rgba(255, 255, 255, 0.04);
     border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 8px;
-    padding: 12px;
+    border-radius: 6px;
+    padding: 8px;
     display: flex;
     flex-direction: column;
-    gap: 8px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    gap: 6px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.12);
     transition: transform 0.2s ease, background 0.2s ease;
 }
 
 .sunsethue-card:hover {
-    background: rgba(255, 255, 255, 0.07);
+    background: rgba(255, 255, 255, 0.06);
 }
 
 /* Type Highlights */
@@ -55,38 +66,16 @@
     border-left: 3px solid #ff4e50; /* Sunset Coral/Pink */
 }
 
-/* Flex rows */
-.sunsethue-row {
+/* Header: Icon + Stacked time metadata */
+.sunsethue-header {
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    width: 100%;
+    gap: 6px;
 }
 
-.sunsethue-row.top-row {
-    font-size: 0.9rem;
-}
-
-.sunsethue-row.middle-row {
-    font-size: 0.8rem;
-    padding: 2px 0;
-    gap: 8px;
-}
-
-.sunsethue-row.magic-row {
-    font-size: 0.72rem;
-    padding-top: 4px;
-    border-top: 1px dashed rgba(255, 255, 255, 0.1);
-    justify-content: flex-start;
-    flex-wrap: wrap;
-    gap: 8px;
-}
-
-/* Core Icon Details */
 .icon-main {
-    font-size: 1.1rem;
-    vertical-align: middle;
-    margin-right: 4px;
+    font-size: 1.3rem;
+    line-height: 1;
 }
 
 .type-sunrise .icon-main {
@@ -97,16 +86,43 @@
     color: #f857a6; /* Vibrant sunset pink */
 }
 
+.sunsethue-meta-container {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.1;
+}
+
+.sunsethue-time {
+    font-size: 1rem;
+}
+
+.sunsethue-type-label {
+    font-size: 0.6rem;
+    letter-spacing: 0.05em;
+}
+
+/* Metrics row: Quality & Clouds side-by-side */
+.sunsethue-metrics {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 4px;
+    padding-top: 2px;
+}
+
+.sunsethue-metric-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 2px;
+    font-size: 0.72rem;
+}
+
 .icon-sub {
-    font-size: 0.95rem;
-    vertical-align: middle;
-    margin-right: 2px;
+    font-size: 0.85rem;
 }
 
 .icon-magic {
-    font-size: 0.85rem;
-    vertical-align: middle;
-    margin-right: 2px;
+    font-size: 0.78rem;
 }
 
 .icon-magic.golden {
@@ -130,7 +146,25 @@
     color: #b0bec5 !important; /* Muted slate */
 }
 
-/* Typography styles */
+/* Magic Hours: Stacked inside card footer */
+.sunsethue-magic-hours {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    border-top: 1px dashed rgba(255, 255, 255, 0.08);
+    padding-top: 5px;
+    margin-top: 2px;
+}
+
+.sunsethue-magic-row {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 0.65rem;
+    white-space: nowrap;
+}
+
+/* Typography utilities */
 .bold {
     font-weight: 600;
 }
@@ -140,25 +174,18 @@
 }
 
 .dimmed {
-    color: #888888;
+    color: #999999;
 }
 
 .xsmall {
-    font-size: 0.72rem;
+    font-size: 0.65rem;
 }
 
 .error-text {
     color: #ef5350;
     background: rgba(239, 83, 80, 0.1);
     border: 1px solid rgba(239, 83, 80, 0.2);
-    padding: 8px;
+    padding: 6px;
     border-radius: 4px;
-}
-
-.sunsethue-magic-item {
-    display: inline-flex;
-    align-items: center;
-    background: rgba(255, 255, 255, 0.03);
-    padding: 2px 6px;
-    border-radius: 4px;
+    font-size: 0.75rem;
 }

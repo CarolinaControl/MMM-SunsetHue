@@ -255,3 +255,117 @@
     margin-right: 0;
     margin-left: 2px;
 }
+
+/* ========================================== */
+/* TABLE LAYOUT STYLE RULES (TEXT ROWS/COLS)  */
+/* ========================================== */
+
+.sunsethue-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 4px;
+}
+
+.sunsethue-table td {
+    padding: 6px 8px;
+    vertical-align: middle;
+    text-align: left;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.sunsethue-table tr.sunsethue-table-magic-row td {
+    padding-top: 2px;
+    padding-bottom: 6px;
+    border-top: none;
+}
+
+.sunsethue-table-day {
+    white-space: nowrap;
+    width: 20%;
+}
+
+.sunsethue-table-event {
+    white-space: nowrap;
+}
+
+.sunsethue-table-time {
+    text-align: right !important;
+    white-space: nowrap;
+}
+
+.sunsethue-table-quality {
+    text-align: right !important;
+    white-space: nowrap;
+}
+
+.sunsethue-table-cloud {
+    text-align: right !important;
+    white-space: nowrap;
+}
+
+.sunsethue-table-metric {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.sunsethue-magic-item-table {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    margin-right: 12px;
+    font-size: 0.65rem;
+}
+
+.sunsethue-table-magic-content {
+    text-align: left;
+}
+
+/* ========================================== */
+/* TABLE RIGHT SCREEN ALIGNMENT OVERRIDES     */
+/* ========================================== */
+
+.region.right .sunsethue-table td {
+    text-align: right;
+}
+
+.region.right .sunsethue-table-day {
+    text-align: right;
+}
+
+.region.right .sunsethue-table-event {
+    display: inline-flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    gap: 6px;
+    justify-content: flex-start;
+}
+
+.region.right .sunsethue-table-event .icon-main {
+    margin-right: 0;
+    margin-left: 4px;
+}
+
+.region.right .sunsethue-table-metric {
+    flex-direction: row-reverse;
+}
+
+.region.right .sunsethue-table-metric .icon-sub {
+    margin-right: 0;
+    margin-left: 2px;
+}
+
+.region.right .sunsethue-table-magic-content {
+    text-align: right;
+}
+
+.region.right .sunsethue-magic-item-table {
+    flex-direction: row-reverse;
+    margin-right: 0;
+    margin-left: 12px;
+}
+
+.region.right .sunsethue-magic-item-table .icon-magic {
+    margin-right: 0;
+    margin-left: 2px;
+}

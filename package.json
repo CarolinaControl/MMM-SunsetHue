@@ -1,0 +1,19 @@
+{
+  "name": "mmm-sunsethue",
+  "version": "1.0.0",
+  "description": "MagicMirror² module to display sunrise/sunset times, quality percentages, and cloud cover from sunsethue.com",
+  "main": "MMM-SunsetHue.js",
+  "keywords": [
+    "magicmirror",
+    "module",
+    "sunset",
+    "sunrise",
+    "sunsethue",
+    "weather"
+  ],
+  "author": "Antigravity",
+  "license": "MIT",
+  "engines": {
+    "node": ">=16"
+  }
+}

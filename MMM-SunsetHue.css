@@ -1,0 +1,164 @@
+/* MMM-SunsetHue.css */
+
+.mmm-sunsethue-wrapper {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    color: #efefef;
+    max-width: 320px;
+    text-align: left;
+}
+
+.sunsethue-container {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.sunsethue-day-section {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.sunsethue-day-header {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding-left: 4px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+    padding-bottom: 4px;
+    margin-bottom: 4px;
+}
+
+/* Event Card Design */
+.sunsethue-card {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 8px;
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.sunsethue-card:hover {
+    background: rgba(255, 255, 255, 0.07);
+}
+
+/* Type Highlights */
+.sunsethue-card.type-sunrise {
+    border-left: 3px solid #ffb347; /* Sunrise Amber */
+}
+
+.sunsethue-card.type-sunset {
+    border-left: 3px solid #ff4e50; /* Sunset Coral/Pink */
+}
+
+/* Flex rows */
+.sunsethue-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.sunsethue-row.top-row {
+    font-size: 0.9rem;
+}
+
+.sunsethue-row.middle-row {
+    font-size: 0.8rem;
+    padding: 2px 0;
+    gap: 8px;
+}
+
+.sunsethue-row.magic-row {
+    font-size: 0.72rem;
+    padding-top: 4px;
+    border-top: 1px dashed rgba(255, 255, 255, 0.1);
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+/* Core Icon Details */
+.icon-main {
+    font-size: 1.1rem;
+    vertical-align: middle;
+    margin-right: 4px;
+}
+
+.type-sunrise .icon-main {
+    color: #ffd194; /* Soft sunrise glow */
+}
+
+.type-sunset .icon-main {
+    color: #f857a6; /* Vibrant sunset pink */
+}
+
+.icon-sub {
+    font-size: 0.95rem;
+    vertical-align: middle;
+    margin-right: 2px;
+}
+
+.icon-magic {
+    font-size: 0.85rem;
+    vertical-align: middle;
+    margin-right: 2px;
+}
+
+.icon-magic.golden {
+    color: #ffca28; /* Warm golden */
+}
+
+.icon-magic.blue {
+    color: #42a5f5; /* Evening blue */
+}
+
+/* Quality Level Colors */
+.quality-high {
+    color: #66bb6a !important; /* Beautiful green */
+}
+
+.quality-medium {
+    color: #ffa726 !important; /* Nice orange */
+}
+
+.quality-low {
+    color: #b0bec5 !important; /* Muted slate */
+}
+
+/* Typography styles */
+.bold {
+    font-weight: 600;
+}
+
+.bright {
+    color: #ffffff;
+}
+
+.dimmed {
+    color: #888888;
+}
+
+.xsmall {
+    font-size: 0.72rem;
+}
+
+.error-text {
+    color: #ef5350;
+    background: rgba(239, 83, 80, 0.1);
+    border: 1px solid rgba(239, 83, 80, 0.2);
+    padding: 8px;
+    border-radius: 4px;
+}
+
+.sunsethue-magic-item {
+    display: inline-flex;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.03);
+    padding: 2px 6px;
+    border-radius: 4px;
+}

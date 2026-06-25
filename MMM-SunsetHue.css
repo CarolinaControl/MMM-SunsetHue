@@ -57,7 +57,7 @@
     background: rgba(255, 255, 255, 0.06);
 }
 
-/* Type Highlights */
+/* Default Left Align styles */
 .sunsethue-card.type-sunrise {
     border-left: 3px solid #ffb347; /* Sunrise Amber */
 }
@@ -76,6 +76,7 @@
 .icon-main {
     font-size: 1.3rem;
     line-height: 1;
+    margin-right: 4px;
 }
 
 .type-sunrise .icon-main {
@@ -119,10 +120,12 @@
 
 .icon-sub {
     font-size: 0.85rem;
+    margin-right: 2px;
 }
 
 .icon-magic {
     font-size: 0.78rem;
+    margin-right: 2px;
 }
 
 .icon-magic.golden {
@@ -188,4 +191,67 @@
     padding: 6px;
     border-radius: 4px;
     font-size: 0.75rem;
+}
+
+/* ========================================== */
+/* RIGHT SCREEN REGION ALIGNMENT OVERRIDES    */
+/* ========================================== */
+
+.region.right .mmm-sunsethue-wrapper {
+    text-align: right;
+}
+
+/* Shift day header border highlight to favor right side */
+.region.right .sunsethue-day-header {
+    text-align: right;
+    padding-left: 0;
+    padding-right: 2px;
+}
+
+/* Flip colored highlights to the right card edge */
+.region.right .sunsethue-card {
+    border-left: 1px solid rgba(255, 255, 255, 0.08);
+}
+.region.right .sunsethue-card.type-sunrise {
+    border-right: 3px solid #ffb347;
+}
+.region.right .sunsethue-card.type-sunset {
+    border-right: 3px solid #ff4e50;
+}
+
+/* Reverse card header elements */
+.region.right .sunsethue-header {
+    flex-direction: row-reverse;
+}
+.region.right .icon-main {
+    margin-right: 0;
+    margin-left: 4px;
+}
+.region.right .sunsethue-meta-container {
+    align-items: flex-end;
+    text-align: right;
+}
+
+/* Reverse inline metrics indicators */
+.region.right .sunsethue-metrics {
+    flex-direction: row-reverse;
+}
+.region.right .sunsethue-metric-item {
+    flex-direction: row-reverse;
+    gap: 2px;
+}
+.region.right .icon-sub {
+    margin-right: 0;
+    margin-left: 2px;
+}
+
+/* Align magic hours to the right edge */
+.region.right .sunsethue-magic-row {
+    flex-direction: row-reverse;
+    justify-content: flex-start;
+    gap: 4px;
+}
+.region.right .icon-magic {
+    margin-right: 0;
+    margin-left: 2px;
 }

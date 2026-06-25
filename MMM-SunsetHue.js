@@ -124,15 +124,20 @@ Module.register("MMM-SunsetHue", {
             dayHeader.innerText = this.getDayLabel(dateKey);
             dayWrapper.appendChild(dayHeader);
 
+            // Container for event cards to layout side-by-side
+            const cardsContainer = document.createElement("div");
+            cardsContainer.className = "sunsethue-cards-container";
+
             const events = groupedEvents[dateKey];
             // Sort chronologically within the day
             events.sort((a, b) => new Date(a.time) - new Date(b.time));
 
             events.forEach(event => {
                 const eventCard = this.createEventCard(event);
-                dayWrapper.appendChild(eventCard);
+                cardsContainer.appendChild(eventCard);
             });
 
+            dayWrapper.appendChild(cardsContainer);
             container.appendChild(dayWrapper);
         });
 
@@ -140,41 +145,48 @@ Module.register("MMM-SunsetHue", {
         return wrapper;
     },
 
-    // Create a card block representing a single event
+    // Create a card block representing a single event (compact layout)
     createEventCard: function(event) {
         const card = document.createElement("div");
         const eventType = event.type || "sunset";
         card.className = `sunsethue-card type-${eventType}`;
 
-        // Top Row: Type Title and Event Local Time
-        const topRow = document.createElement("div");
-        topRow.className = "sunsethue-row top-row";
+        // Header Section: Icon + Time & Type Stacked
+        const header = document.createElement("div");
+        header.className = "sunsethue-header";
 
-        const typeContainer = document.createElement("div");
-        typeContainer.className = "sunsethue-type bright bold";
         const iconClass = eventType === "sunrise" ? "mdi-weather-sunset-up" : "mdi-weather-sunset-down";
-        typeContainer.innerHTML = `<span class="mdi ${iconClass} icon-main"></span> ${eventType.toUpperCase()}`;
+        
+        const mainIcon = document.createElement("span");
+        mainIcon.className = `mdi ${iconClass} icon-main`;
+        header.appendChild(mainIcon);
 
-        const timeContainer = document.createElement("div");
-        timeContainer.className = "sunsethue-time bright bold";
-        timeContainer.innerText = this.formatTime(event.time);
+        const metaContainer = document.createElement("div");
+        metaContainer.className = "sunsethue-meta-container";
 
-        topRow.appendChild(typeContainer);
-        topRow.appendChild(timeContainer);
-        card.appendChild(topRow);
+        const timeSpan = document.createElement("div");
+        timeSpan.className = "sunsethue-time bold bright";
+        timeSpan.innerText = this.formatTime(event.time);
+        metaContainer.appendChild(timeSpan);
 
-        // Middle Row: Forecast Quality & Cloud Cover percentage metrics
+        const typeSpan = document.createElement("div");
+        typeSpan.className = "sunsethue-type-label xsmall dimmed bold";
+        typeSpan.innerText = eventType.toUpperCase();
+        metaContainer.appendChild(typeSpan);
+
+        header.appendChild(metaContainer);
+        card.appendChild(header);
+
+        // Metrics Section: Quality and Cloud Cover percentages (compact inline indicators)
         if (this.config.showQualityPercent || this.config.showCloudCover) {
-            const middleRow = document.createElement("div");
-            middleRow.className = "sunsethue-row middle-row small dimmed";
+            const metrics = document.createElement("div");
+            metrics.className = "sunsethue-metrics small dimmed";
 
             if (this.config.showQualityPercent && event.quality !== undefined) {
-                const qualityDiv = document.createElement("div");
-                qualityDiv.className = "sunsethue-quality";
+                const qualitySpan = document.createElement("div");
+                qualitySpan.className = "sunsethue-metric-item";
                 const pct = Math.round(event.quality * 100);
-                const qualityText = event.quality_text ? ` (${event.quality_text})` : "";
                 
-                // Categorize colors
                 let qualityClass = "quality-low";
                 if (event.quality >= 0.7) {
                     qualityClass = "quality-high";
@@ -182,45 +194,47 @@ Module.register("MMM-SunsetHue", {
                     qualityClass = "quality-medium";
                 }
 
-                qualityDiv.innerHTML = `<span class="mdi mdi-palette-outline icon-sub ${qualityClass}"></span> Quality: <span class="bright bold ${qualityClass}">${pct}%${qualityText}</span>`;
-                middleRow.appendChild(qualityDiv);
+                qualitySpan.innerHTML = `<span class="mdi mdi-palette-outline icon-sub ${qualityClass}"></span> <span class="bright bold">${pct}%</span>`;
+                metrics.appendChild(qualitySpan);
             }
 
             if (this.config.showCloudCover && event.cloud_cover !== undefined) {
-                const cloudDiv = document.createElement("div");
-                cloudDiv.className = "sunsethue-cloud";
+                const cloudSpan = document.createElement("div");
+                cloudSpan.className = "sunsethue-metric-item";
                 const cloudPct = Math.round(event.cloud_cover * 100);
-                cloudDiv.innerHTML = `<span class="mdi mdi-weather-cloudy icon-sub"></span> Clouds: <span class="bright bold">${cloudPct}%</span>`;
-                middleRow.appendChild(cloudDiv);
+                cloudSpan.innerHTML = `<span class="mdi mdi-weather-cloudy icon-sub"></span> <span class="bright bold">${cloudPct}%</span>`;
+                metrics.appendChild(cloudSpan);
             }
 
-            card.appendChild(middleRow);
+            card.appendChild(metrics);
         }
 
-        // Bottom Row: Golden & Blue Hour intervals
+        // Footer Section: Golden & Blue Hour intervals (Stacked for narrow column styling)
         if (this.config.showMagicHours && event.magics) {
             const magics = event.magics;
-            const magicRow = document.createElement("div");
-            magicRow.className = "sunsethue-row magic-row xsmall dimmed";
-
-            let goldenText = "";
-            let blueText = "";
+            const magicHours = document.createElement("div");
+            magicHours.className = "sunsethue-magic-hours xsmall dimmed";
 
             if (magics.golden_hour && magics.golden_hour.length === 2) {
                 const start = this.formatTime(magics.golden_hour[0]);
                 const end = this.formatTime(magics.golden_hour[1]);
-                goldenText = `<span class="sunsethue-magic-item"><span class="mdi mdi-brightness-5 icon-magic golden"></span> Golden: ${start} - ${end}</span>`;
+                const goldenDiv = document.createElement("div");
+                goldenDiv.className = "sunsethue-magic-row";
+                goldenDiv.innerHTML = `<span class="mdi mdi-brightness-5 icon-magic golden"></span> ${start} - ${end}`;
+                magicHours.appendChild(goldenDiv);
             }
 
             if (magics.blue_hour && magics.blue_hour.length === 2) {
                 const start = this.formatTime(magics.blue_hour[0]);
                 const end = this.formatTime(magics.blue_hour[1]);
-                blueText = `<span class="sunsethue-magic-item"><span class="mdi mdi-brightness-3 icon-magic blue"></span> Blue: ${start} - ${end}</span>`;
+                const blueDiv = document.createElement("div");
+                blueDiv.className = "sunsethue-magic-row";
+                blueDiv.innerHTML = `<span class="mdi mdi-brightness-3 icon-magic blue"></span> ${start} - ${end}`;
+                magicHours.appendChild(blueDiv);
             }
 
-            if (goldenText || blueText) {
-                magicRow.innerHTML = `${goldenText} ${blueText}`;
-                card.appendChild(magicRow);
+            if (magicHours.children.length > 0) {
+                card.appendChild(magicHours);
             }
         }
 

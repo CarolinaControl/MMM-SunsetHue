@@ -2,8 +2,6 @@
 
 A premium MagicMirror² module that fetches sunrise and sunset quality forecasts from the [Sunsethue](https://sunsethue.com) API. It displays sunrise/sunset times, cloud cover, quality percentages, and magic hour (golden and blue hour) windows with modern, responsive styling and Material Design Icons (MDI).
 
-![Preview Placeholder](https://raw.githubusercontent.com/pictogrammers/MPSL/master/assets/icon.png)
-
 ## Features
 
 - **Sun Events:** Displays sunrise and sunset times.

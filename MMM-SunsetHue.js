@@ -11,6 +11,7 @@ Module.register("MMM-SunsetHue", {
         showMagicHours: true,
         onlyShowUpcoming: false,
         showDayHeaders: true,
+        layout: "cards", // "cards" (default) or "table"
         animationSpeed: 1000, // 1 second fade
         initialLoadDelay: 0
     },
@@ -112,6 +113,16 @@ Module.register("MMM-SunsetHue", {
             return wrapper;
         }
 
+        if (this.config.layout === "table") {
+            wrapper.appendChild(this.getTableDom(displayDates, groupedEvents));
+        } else {
+            wrapper.appendChild(this.getCardsDom(displayDates, groupedEvents));
+        }
+        return wrapper;
+    },
+
+    // Build the grid-based cards layout
+    getCardsDom: function(displayDates, groupedEvents) {
         const container = document.createElement("div");
         container.className = "sunsethue-container";
 
@@ -145,8 +156,117 @@ Module.register("MMM-SunsetHue", {
             container.appendChild(dayWrapper);
         });
 
-        wrapper.appendChild(container);
-        return wrapper;
+        return container;
+    },
+
+    // Build the row-and-column table layout (like standard weather forecast modules)
+    getTableDom: function(displayDates, groupedEvents) {
+        const table = document.createElement("table");
+        table.className = "sunsethue-table small";
+
+        displayDates.forEach(dateKey => {
+            const events = groupedEvents[dateKey];
+            events.sort((a, b) => new Date(a.time) - new Date(b.time));
+
+            events.forEach((event, index) => {
+                const row = document.createElement("tr");
+                row.className = `sunsethue-table-row type-${event.type || "sunset"}`;
+
+                // Column 1: Day Label (only for the first row of each day)
+                const dayCell = document.createElement("td");
+                dayCell.className = "sunsethue-table-day bold dimmed";
+                const dayLabel = this.getDayLabel(dateKey);
+                const shouldShowDay = this.config.showDayHeaders && (this.config.days > 1 || dayLabel !== "Today");
+                if (index === 0 && shouldShowDay) {
+                    dayCell.innerText = dayLabel;
+                } else {
+                    dayCell.innerText = "";
+                }
+                row.appendChild(dayCell);
+
+                // Column 2: Event Icon & Type name label
+                const eventCell = document.createElement("td");
+                eventCell.className = "sunsethue-table-event";
+                const eventType = event.type || "sunset";
+                const iconClass = eventType === "sunrise" ? "mdi-weather-sunset-up" : "mdi-weather-sunset-down";
+                eventCell.innerHTML = `<span class="mdi ${iconClass} icon-main"></span> <span class="dimmed">${eventType.toUpperCase()}</span>`;
+                row.appendChild(eventCell);
+
+                // Column 3: Event Time
+                const timeCell = document.createElement("td");
+                timeCell.className = "sunsethue-table-time bold bright";
+                timeCell.innerText = this.formatTime(event.time);
+                row.appendChild(timeCell);
+
+                // Column 4: Quality indicator percentage
+                const qualityCell = document.createElement("td");
+                qualityCell.className = "sunsethue-table-quality";
+                if (this.config.showQualityPercent && event.quality !== undefined) {
+                    const pct = Math.round(event.quality * 100);
+                    let qualityClass = "quality-low";
+                    if (event.quality >= 0.7) {
+                        qualityClass = "quality-high";
+                    } else if (event.quality >= 0.4) {
+                        qualityClass = "quality-medium";
+                    }
+                    qualityCell.innerHTML = `<div class="sunsethue-table-metric"><span class="mdi mdi-palette-outline icon-sub ${qualityClass}"></span> <span class="bright bold">${pct}%</span></div>`;
+                } else {
+                    qualityCell.innerText = "";
+                }
+                row.appendChild(qualityCell);
+
+                // Column 5: Cloud Cover indicator percentage
+                const cloudCell = document.createElement("td");
+                cloudCell.className = "sunsethue-table-cloud";
+                if (this.config.showCloudCover && event.cloud_cover !== undefined) {
+                    const cloudPct = Math.round(event.cloud_cover * 100);
+                    cloudCell.innerHTML = `<div class="sunsethue-table-metric"><span class="mdi mdi-weather-cloudy icon-sub"></span> <span class="bright bold">${cloudPct}%</span></div>`;
+                } else {
+                    cloudCell.innerText = "";
+                }
+                row.appendChild(cloudCell);
+
+                table.appendChild(row);
+
+                // Optional Sub-row for Magic Hours (Golden/Blue) underneath the event details row
+                if (this.config.showMagicHours && event.magics) {
+                    const magics = event.magics;
+                    let goldenText = "";
+                    let blueText = "";
+
+                    if (magics.golden_hour && magics.golden_hour.length === 2) {
+                        const start = this.formatTime(magics.golden_hour[0]);
+                        const end = this.formatTime(magics.golden_hour[1]);
+                        goldenText = `<span class="sunsethue-magic-item-table"><span class="mdi mdi-brightness-5 icon-magic golden"></span> Golden: ${start}-${end}</span>`;
+                    }
+
+                    if (magics.blue_hour && magics.blue_hour.length === 2) {
+                        const start = this.formatTime(magics.blue_hour[0]);
+                        const end = this.formatTime(magics.blue_hour[1]);
+                        blueText = `<span class="sunsethue-magic-item-table"><span class="mdi mdi-brightness-3 icon-magic blue"></span> Blue: ${start}-${end}</span>`;
+                    }
+
+                    if (goldenText || blueText) {
+                        const magicRow = document.createElement("tr");
+                        magicRow.className = "sunsethue-table-magic-row xsmall dimmed";
+                        
+                        // Empty cell to align under Day column
+                        const dayPad = document.createElement("td");
+                        magicRow.appendChild(dayPad);
+
+                        const magicContentCell = document.createElement("td");
+                        magicContentCell.colSpan = 4;
+                        magicContentCell.className = "sunsethue-table-magic-content";
+                        magicContentCell.innerHTML = `${goldenText} ${blueText}`;
+                        
+                        magicRow.appendChild(magicContentCell);
+                        table.appendChild(magicRow);
+                    }
+                }
+            });
+        });
+
+        return table;
     },
 
     // Create a card block representing a single event (compact layout)

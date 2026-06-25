@@ -1,6 +1,8 @@
 # MMM-SunsetHue
 
-A  MagicMirror² module that fetches sunrise and sunset quality forecasts from the [Sunsethue](https://sunsethue.com) API. It displays sunrise/sunset times, cloud cover, quality percentages, and magic hour (golden and blue hour) windows with modern, responsive styling and Material Design Icons (MDI).
+A premium MagicMirror² module that fetches sunrise and sunset quality forecasts from the [Sunsethue](https://sunsethue.com) API. It displays sunrise/sunset times, cloud cover, quality percentages, and magic hour (golden and blue hour) windows with modern, responsive styling and Material Design Icons (MDI).
+
+![Preview Placeholder](https://raw.githubusercontent.com/pictogrammers/MPSL/master/assets/icon.png)
 
 ## Features
 
@@ -45,7 +47,8 @@ Add the module to your `config/config.js` file:
         showCloudCover: true,
         showQualityPercent: true,
         showMagicHours: true,
-        onlyShowUpcoming: false // Set to true to hide events that have already passed today
+        onlyShowUpcoming: false, // Set to true to hide events that have already passed today
+        layout: "cards" // "cards" for modular grid cards, "table" for weather-like rows & columns
     }
 }
 ```
@@ -64,6 +67,7 @@ Add the module to your `config/config.js` file:
 | `showMagicHours` | `boolean` | `true` | Show or hide Golden and Blue Hour times. |
 | `onlyShowUpcoming` | `boolean` | `false` | If `true`, hides events (e.g. Sunrise) once their time has passed. |
 | `showDayHeaders` | `boolean` | `true` | Show or hide day section headers (always shows for multi-day, automatically hides "Today" for single-day). |
+| `layout` | `string` | `"cards"` | Layout display format: `"cards"` (glassmorphism cards) or `"table"` (clean native weather rows and columns style). |
 | `animationSpeed` | `number` | `1000` | Fade-in/out transition speed in milliseconds. |
 
 ## Credit Cost Details

@@ -1,6 +1,6 @@
 # MMM-SunsetHue
 
-A premium MagicMirror² module that fetches sunrise and sunset quality forecasts from the [Sunsethue](https://sunsethue.com) API. It displays sunrise/sunset times, cloud cover, quality percentages, and magic hour (golden and blue hour) windows with modern, responsive styling and Material Design Icons (MDI).
+A  MagicMirror² module that fetches sunrise and sunset quality forecasts from the [Sunsethue](https://sunsethue.com) API. It displays sunrise/sunset times, cloud cover, quality percentages, and magic hour (golden and blue hour) windows with modern, responsive styling and Material Design Icons (MDI).
 
 ![Preview Placeholder](https://raw.githubusercontent.com/pictogrammers/MPSL/master/assets/icon.png)
 
@@ -65,6 +65,7 @@ Add the module to your `config/config.js` file:
 | `showQualityPercent` | `boolean` | `true` | Show or hide the event quality percentage & text. |
 | `showMagicHours` | `boolean` | `true` | Show or hide Golden and Blue Hour times. |
 | `onlyShowUpcoming` | `boolean` | `false` | If `true`, hides events (e.g. Sunrise) once their time has passed. |
+| `showDayHeaders` | `boolean` | `true` | Show or hide day section headers (always shows for multi-day, automatically hides "Today" for single-day). |
 | `animationSpeed` | `number` | `1000` | Fade-in/out transition speed in milliseconds. |
 
 ## Credit Cost Details
